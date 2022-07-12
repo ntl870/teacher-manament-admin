@@ -10,7 +10,10 @@ export const Login = () => {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const { data } = await axios.post("/api/auth/login", values);
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/auth/login`,
+        values
+      );
       localStorage.setItem("token", data.token);
       navigate("/", { replace: true });
       message.success("Login Successful");
