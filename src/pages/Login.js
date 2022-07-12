@@ -1,7 +1,7 @@
 import { Button, Form, Input, Row, Col, message } from "antd";
 import { useState } from "react";
-import { axiosClient } from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -10,9 +10,9 @@ export const Login = () => {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const { data } = await axiosClient.post("/api/auth/login", values);
+      const { data } = await axios.post("/api/auth/login", values);
       localStorage.setItem("token", data.token);
-      navigate("/");
+      navigate("/", { replace: true });
       message.success("Login Successful");
     } catch (e) {
       message.error("Login Failed");

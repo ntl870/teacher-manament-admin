@@ -12,7 +12,7 @@ import {
 } from "antd";
 import { useState, useEffect, useMemo } from "react";
 import moment from "moment";
-import { patchSchedules } from "../api/teacher";
+import { patchSchedules, deleteSchedules } from "../api/teacher";
 import { addSchedule, getScheduleById } from "../api/schedule";
 import { flatten } from "../utils/flatten";
 import { useParams } from "react-router-dom";
@@ -119,15 +119,18 @@ export const EditTeacher = () => {
     });
   };
 
-  const deleteEvent = (date, index) => {
-    const weekDayIndex = weekDay.findIndex((item) => item.value === date);
-    setWeekDay((prev) => {
-      const newWeekDay = [...prev];
-      newWeekDay[weekDayIndex].events = newWeekDay[weekDayIndex].events.filter(
-        (_, i) => i !== index
-      );
-      return newWeekDay;
-    });
+  const deleteEvent = async (date, index, id) => {
+    try {
+      if (!!id) await deleteSchedules(id);
+      const weekDayIndex = weekDay.findIndex((item) => item.value === date);
+      setWeekDay((prev) => {
+        const newWeekDay = [...prev];
+        newWeekDay[weekDayIndex].events = newWeekDay[
+          weekDayIndex
+        ].events.filter((_, i) => i !== index);
+        return newWeekDay;
+      });
+    } catch (e) {}
   };
 
   useEffect(() => {
@@ -312,7 +315,14 @@ export const EditTeacher = () => {
                           size="large"
                           danger
                           icon={<DeleteOutlined />}
-                          onClick={() => deleteEvent(item.value, eventIndex)}
+                          onClick={() => {
+                            console.log(item);
+                            deleteEvent(
+                              item.value,
+                              eventIndex,
+                              item.events[0].id
+                            );
+                          }}
                         />
                       </Col>
                     </Row>

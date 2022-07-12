@@ -9,3 +9,6 @@ export const getSchedules = () => axiosClient.get("/api/schedules");
 
 export const patchSchedules = (values, id) =>
   axiosClient.patch(`/api/schedules/${id}`, values);
+
+export const deleteSchedules = (id) =>
+  axiosClient.delete(`/api/schedules/${id}`);
