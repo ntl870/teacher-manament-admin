@@ -136,9 +136,9 @@ export const EditTeacher = () => {
   useEffect(() => {
     getScheduleById(teacherId).then(({ data }) => {
       setTeacher({
-        id: data.schedules[0].teacherId,
-        email: data.schedules[0].teacher.email,
-        name: data.schedules[0].teacher.name,
+        id: data.teacher.id,
+        email: data.teacher.email,
+        name: data.teacher.name,
       });
       const initWeekDay = data.schedules.map((item) => {
         return {
