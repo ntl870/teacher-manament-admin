@@ -153,16 +153,16 @@ export const AddNewTeacher = () => {
         ).filter((item) => !!item.from && !!item.to),
       };
       await addSchedule(schedule);
-      message.success("Add teacher successfully");
-    } catch (e) {
-      message.error("Add teacher failed");
-    } finally {
       form.resetFields();
       setAvatar({
         fileList: [],
         url: "",
       });
       setWeekDay(WeekDayProps);
+      message.success("Add teacher successfully");
+    } catch (e) {
+      message.error("Add teacher failed");
+    } finally {
       setLoading(false);
     }
   };

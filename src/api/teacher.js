@@ -1,7 +1,10 @@
 import { axiosClient } from "./axios";
 
 export const addTeacher = (values) =>
-  axiosClient.post("/api/admin/teachers", values);
+  axiosClient.post("/api/admin/teachers", {
+    ...values,
+    role: "teacher",
+  });
 
 export const getTeachers = () => axiosClient.get("/api/admin/teachers");
 
